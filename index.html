@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrições Show do Milhão 2026 - Portal SBT</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-color: #ecc94b;
+            --background: #f7fafc;
+            --text-color: #2d3748;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            margin: 0; padding: 0;
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        body.de-cabeca-para-baixo {
+            transform: rotate(180deg);
+            background-color: #0c0c0c !important;
+            color: #fff !important;
+            filter: contrast(130%);
+        }
+
+        #abertura-silvio {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, #1a365d 0%, #000 100%); z-index: 100000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: yellow; text-align: center; transition: opacity 0.5s ease;
+        }
+        .foto-silvio {
+            width: 200px; height: 200px; border-radius: 50%;
+            border: 5px solid var(--accent-color); box-shadow: 0 0 30px rgba(236, 201, 75, 0.8);
+            margin-bottom: 20px; object-fit: cover; transition: transform 0.3s;
+        }
+        .foto-silvio:hover { transform: rotate(360deg) scale(1.1); }
+        
+        #btn-entrar {
+            background: #38a169; color: white; border: 3px solid #fff;
+            padding: 18px 35px; font-size: 22px; font-weight: 900;
+            border-radius: 50px; cursor: pointer; margin-top: 20px;
+            box-shadow: 0 0 20px #00ff00; animation: pulsar 1s infinite;
+        }
+        @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+        @keyframes susto-erro {
+            0% { transform: translate(15px, -15px) scale(1.02); }
+            25% { transform: translate(-15px, 15px) scale(0.98); }
+            50% { transform: translate(15px, 15px) scale(1.02); }
+            75% { transform: translate(-15px, -15px) scale(0.98); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        .tela-erro { animation: susto-erro 0.3s ease infinite; }
+
+        header {
+            background-color: var(--primary-color); color: white; padding: 15px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 5px solid var(--accent-color);
+        }
+        .logo-area { font-weight: bold; font-size: 24px; }
+        .logo-area span { color: var(--accent-color); }
+
+        .container {
+            max-width: 800px; margin: 30px auto; background: white; padding: 30px;
+            border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            min-height: 540px; position: relative; border-top: 8px solid var(--accent-color);
+        }
+
+        h1 { color: var(--primary-color); font-size: 24px; margin-bottom: 5px; text-align: center; }
+        p.subtitle { text-align: center; color: #718096; margin-bottom: 25px; font-size: 14px; }
+
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+        input[type="text"], input[type="date"], input[type="number"], select {
+            width: 100%; padding: 10px; border: 2px solid #e2e8f0;
+            border-radius: 6px; box-sizing: border-box; font-size: 15px;
+        }
+        .row { display: flex; gap: 15px; }
+        .row .form-group { flex: 1; }
+
+        .btn-default {
+            background-color: var(--primary-color); color: white; border: none;
+            padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 6px;
+            cursor: pointer; transition: 0.2s; display: block; margin: 20px auto 0; width: 70%;
+        }
+        .btn-default:hover { background-color: #2b6cb0; transform: scale(1.02); }
+
+        .captcha-box { border: 2px dashed #cbd5e0; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0; background: #f8fafc; }
+        .captcha-options { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+        .captcha-item { font-size: 28px; padding: 8px 15px; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; background: white; transition: 0.2s; }
+        .captcha-item:hover { transform: scale(1.1); border-color: var(--accent-color); }
+
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .btn-quiz {
+            background: #edf2f7; border: 2px solid #cbd5e0; padding: 12px;
+            border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer;
+            text-align: left; transition: 0.2s;
+        }
+        .btn-quiz:hover { background: #e2e8f0; border-color: var(--primary-color); }
+        
+        .lifelines { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .btn-life { background: var(--accent-color); color: #000; border: none; padding: 8px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 12px; }
+
+        .terms-box { background: #edf2f7; padding: 12px; border-radius: 6px; font-size: 12px; height: 70px; overflow-y: scroll; color: #4a5568; margin-bottom: 15px; border: 1px solid #cbd5e0; }
+        .checkbox-container { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: bold; color: #e53e3e; min-height: 40px; position: relative; }
+        
+        .btn-container { position: relative; height: 60px; margin-top: 15px; }
+        #btn-enviar {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            background-color: #a0aec0; color: white; border: none;
+            padding: 15px 35px; font-size: 16px; font-weight: bold;
+            border-radius: 30px; cursor: not-allowed; white-space: nowrap; transition: left 0.1s, top 0.1s;
+        }
+        #btn-enviar.liberado { background-color: #38a169; cursor: pointer; box-shadow: 0 5px 15px rgba(56, 161, 105, 0.4); }
+
+        .modal-falso {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8); z-index: 99999; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: white; padding: 25px; border-radius: 12px; max-width: 500px; width: 90%;
+            text-align: center; border: 5px solid var(--accent-color); animation: fadeIn 0.3s;
+        }
+        .grid-universitarios { display: flex; justify-content: space-around; margin: 15px 0; }
+        .uni-card { font-size: 12px; font-weight: bold; width: 30%; }
+        .uni-card img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--primary-color); margin-bottom: 5px; object-fit: cover; }
+
+        .terminal-hacker {
+            background: #000; color: #0f0; font-family: 'Courier New', monospace;
+            padding: 15px; border-radius: 6px; font-size: 13px; height: 120px;
+            overflow-y: hidden; text-align: left; margin-top: 15px; border: 1px solid #0f0;
+        }
+
+        .ouro-caindo { position: fixed; font-size: 30px; animation: cair 2s linear forwards; z-index: 999999; pointer-events: none; }
+        @keyframes cair { to { transform: translateY(100vh) rotate(360deg); } }
+
+        .fake-popup {
+            position: fixed; width: 280px; background: #111; border: 3px solid #ecc94b;
+            box-shadow: 0 0 20px rgba(0,0,0,0.9); z-index: 10000; font-family: 'Arial', sans-serif; padding: 4px;
+            color: white; animation: fadeIn 0.2s;
+        }
+        .fake-popup-title { background: #ecc94b; color: #000; font-weight: 900; padding: 4px 8px; font-size: 12px; display: flex; justify-content: space-between; text-transform: uppercase; }
+        .fake-popup-body { padding: 10px; text-align: center; font-size: 13px; font-weight: bold; }
+        .fake-popup-body img { width: 120px; height: 120px; border-radius: 8px; object-fit: cover; filter: grayscale(100%) contrast(150%); border: 2px solid #fff; margin-bottom: 8px; }
+        .quote-sigma { font-style: italic; color: #ecc94b; font-size: 12px; margin-top: 5px; }
+
+        .btn-magico { padding: 20px; font-size: 18px; font-weight: bold; background: #cbd5e0; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .btn-magico:hover { background: #a0aec0; }
+        .grid-magico { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .roleta-box { width: 200px; height: 200px; border-radius: 50%; border: 10px solid var(--primary-color); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-weight: bold; background: var(--accent-color); font-size: 20px; text-align: center; padding: 10px; transition: transform 3s cubic-bezier(0.1, 0.7, 0.1, 1); }
+        
+        #fake-timer { font-size: 18px; font-weight: bold; color: red; text-align: center; margin-bottom: 10px; }
+
+        /* ESTILOS BAILE FUNK PIPOKINHA */
+        .festa-funk { animation: corFunk 0.3s infinite alternate; padding: 15px; border-radius: 10px; text-align: center; border: 3px solid #000; margin-bottom: 15px; }
+        @keyframes corFunk { 0% { background: #ff007f; color: #fff; } 50% { background: #ecc94b; color: #000; } 100% { background: #7928ca; color: #fff; } }
+        
+        /* ESTILOS DA CARRETA FURACÃO E DANÇA */
+        .palco-dança {
+            background: #000;
+            border: 4px solid #ecc94b;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.6);
+            margin-bottom: 20px;
+        }
+        .luzes-balada {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(255,0,0,0.2), rgba(0,255,0,0.2), rgba(0,0,255,0.2));
+            animation: piscaLuz 0.2s infinite;
+            pointer-events: none;
+        }
+        @keyframes piscaLuz { 0% { opacity: 0.2; } 50% { opacity: 0.8; } 100% { opacity: 0.2; } }
+
+        .dancarino {
+            display: inline-block;
+            font-size: 60px;
+            margin: 0 15px;
+            animation: dancaLouca 0.4s infinite alternate ease-in-out;
+            cursor: pointer;
+        }
+        .dancarino:nth-child(2) { animation-delay: 0.1s; animation-name: dancaPulo; }
+        .dancarino:nth-child(3) { animation-delay: 0.2s; }
+        
+        @keyframes dancaLouca {
+            0% { transform: translateY(0) rotate(-15deg) scale(1); }
+            100% { transform: translateY(-20px) rotate(15deg) scale(1.1); }
+        }
+        @keyframes dancaPulo {
+            0% { transform: translateY(0) scaleX(1); }
+            50% { transform: translateY(-30px) scaleX(-1); }
+            100% { transform: translateY(0) scaleX(1); }
+        }
+
+        .area-video-custom {
+            border: 2px dashed #ecc94b;
+            background: #111;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px auto;
+            max-width: 90%;
+        }
+
+        .biometria-digital { width: 130px; height: 130px; border-radius: 50%; background: #e2e8f0; border: 4px dashed #4a5568; margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 60px; cursor: pointer; transition: 0.2s; user-select: none; }
+        .biometria-digital:active { transform: scale(0.9); background: #feb2b2; border-color: red; }
+        
+        .barra-progresso { width: 80%; height: 20px; background: #edf2f7; border-radius: 10px; margin: 15px auto; overflow: hidden; border: 2px solid #cbd5e0; }
+        .progresso-fill { width: 0%; height: 100%; background: #38a169; transition: width 0.1s; }
+
+        .carrinho-box { width: 100%; height: 120px; background: #fffaf0; border: 3px dashed #dd6b20; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: #dd6b20; cursor: crosshair; margin: 15px 0; transition: 0.2s; }
+        .carrinho-box:hover { background: #feebc8; }
+        
+        #btn-encolhedor { transition: all 0.2s ease; background: #e53e3e; color: white; padding: 15px 30px; font-weight: bold; border: 2px solid black; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body id="corpo">
+
+    <!-- ÁUDIO ESCONDIDO DA MC PIPOKINHA E MEMES -->
+    <audio id="audio-fundo-cantando" loop>
+        <source src="c:\Users\Benjamin\Downloads\MC Pipokinha - Quando Eu Morrer Quero Ser Enterrada de Qu4tro (DJ DS) (320).m4a" type="audio/mpeg">
+        <source src="c:\Users\Benjamin\Downloads\MC Pipokinha - Quando Eu Morrer Quero Ser Enterrada de Qu4tro (DJ DS) (320).m4a" type="audio/mpeg">
+    </audio>
+
+    <!-- MODAL UNIVERSITÁRIOS -->
+    <div id="modal-uni" class="modal-falso">
+        <div class="modal-content">
+            <h2 style="color: var(--primary-color); margin-top:0;">🎓 Ajudas dos Universitários</h2>
+            <p>Nossos maiores especialistas analisaram a questão:</p>
+            <div class="grid-universitarios">
+                <div class="uni-card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCjAN1qGWg0d2XIEK-MH_SeZTft6Hsu_byczvhUluICw&s=10" alt="Dog">
+                    <br>Dr. Rex (Cão)<br><span style="color:red;">"Au au au!" (Acho que é 22)</span>
+                </div>
+                <div class="uni-card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMfhQVuUR-U8_CGl6rIaFlqwrvf7Ux11GKrCVfpruTUQ&s=10" alt="Bebê">
+                    <br>Enzo (6 meses)<br><span style="color:red;">"Goo goo!" (Opção B com certeza)</span>
+                </div>
+                <div class="uni-card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-SytGHO-FFuAWBW5bZ-C0lQfz2xsvLAlr_rsBGSA5tg&s=10" alt="Palhaço">
+                    <br>Bozo (Letras)<br><span style="color:red;">"Desculpa, sou de humanas!"</span>
+                </div>
+            </div>
+            <button class="btn-life" onclick="fecharModal('modal-uni')" style="padding: 10px 20px; font-size: 14px;">Entendi (Confiança: 0%)</button>
+        </div>
+    </div>
+
+    <!-- MODAL CARTAS -->
+    <div id="modal-cartas" class="modal-falso">
+        <div class="modal-content" style="background: #9b2c2c; color: white; border-color: #fff;">
+            <h2>🃏 VOCÊ TIROU O REIS DE OUROS!</h2>
+            <div style="font-size: 60px; margin: 10px 0;">💸📉</div>
+            <p style="font-size: 18px; font-weight: bold;">PENALIDADE DO LOMBARDI:</p>
+            <p>Você perdeu R$ 500,00 do seu saldo bancário real por tentar trapacear na sorte!</p>
+            <button class="btn-life" onclick="fecharModal('modal-cartas')" style="background: white; color: black; padding: 10px 20px;">Aceitar Prejuízo</button>
+        </div>
+    </div>
+
+    <!-- TELA INICIAL -->
+    <div id="abertura-silvio">
+        <img class="foto-silvio" src="data:image/jpeg;base64,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" alt="Silvio">
+        <h1 style="color: yellow; font-size: 32px; text-shadow: 2px 2px red; margin: 0;">MAHÔE! QUEM QUER DINHEIRO?!</h1>
+        <p style="font-size: 16px; color: #fff; margin-top: 5px;">Portal Oficial de Inscrições • Tele Sena 2026</p>
+        <button id="btn-entrar" onclick="entrarNoSite()">🎙️ CLIQUE AQUI PARA ENTRAR</button>
+    </div>
+
+    <header>
+        <div class="logo-area">SBT <span>• Show do Milhão</span></div>
+        <div style="font-size: 12px; background: var(--accent-color); color: #000; padding: 4px 8px; border-radius: 4px; font-weight: bold;">🏆 Selo Tele Sena de Qualidade</div>
+    </header>
+
+    <div class="container" id="container-principal">
+        
+        <div id="fake-timer" style="display: none;">⏱️ Tempo para expirar a sessão: <span id="time-val">03:00</span></div>
+
+        <!-- PÁGINA 1: CADASTRO -->
+        <div id="page-1" class="page active">
+            <h1>Passo 1: Qualificação do Herdeiro</h1>
+            <p class="subtitle">Preencha com cuidado. Dados falsos geram multa em carnês.</p>
+            
+            <div class="form-group">
+                <label>Nome Completo (Sem abreviações)</label>
+                <input type="text" id="nome" placeholder="Ex: Silvio Santos" onblur="trollNome(this)">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>CPF (Apenas Números)</label>
+                    <input type="text" id="cpf" placeholder="000.000.000-00" onclick="trollCamera()">
+                </div>
+                <div class="form-group">
+                    <label>Data de Nascimento</label>
+                    <input type="date" id="data-nasc" onchange="trollIdade()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Renda Mensal Declarada</label>
+                <select id="renda" onchange="trollRenda()">
+                    <option value="">-- Selecione sua situação --</option>
+                    <option value="pobre">Até R$ 1.500 (Devendo agiota)</option>
+                    <option value="medio">R$ 3.000 a R$ 5.000 (Pagando boleto)</option>
+                    <option value="rico">R$ 10.000+ (Quem quer dinheiro?)</option>
+                </select>
+            </div>
+
+            <div class="captcha-box">
+                <label style="color: #2b6cb0;">🔒 CAPTCHA DO BAÚ:<br>Clique apenas no que <b>VALE MAIS DO QUE DINHEIRO</b>:</label>
+                <div class="captcha-options">
+                    <div class="captcha-item" onclick="erroCaptcha('dinheiro')">💵</div>
+                    <div class="captcha-item" onclick="acertouCaptcha()">🪙</div>
+                    <div class="captcha-item" onclick="erroCaptcha('cartão')">💳</div>
+                    <div class="captcha-item" onclick="chuvaDeOuro()">💎</div>
+                </div>
+                <span id="captcha-msg" style="font-size: 12px; color: red; font-weight: bold;"></span>
+            </div>
+
+            <button class="btn-default" id="btn-passo1" onclick="pedagioCarne()" style="opacity: 0.5;" disabled>Avançar para Qualificatória ➔</button>
+        </div>
+
+        <!-- PÁGINA 1.5: REFLEXO -->
+        <div id="page-1-5" class="page">
+            <h1>Passo 2: Teste de Reflexo do Roque</h1>
+            <p class="subtitle">Encontre o botão VERDADEIRO para avançar. Os outros dão choque!</p>
+            
+            <div class="grid-magico" id="grid-botoes">
+                <button class="btn-magico" onclick="choqueBotao()">CLIQUE AQUI</button>
+                <button class="btn-magico" onclick="choqueBotao()">NÃO, AQUI</button>
+                <button class="btn-magico" id="btn-verdadeiro-reflexo" onclick="acertouReflexo()">SOU EU!</button>
+                <button class="btn-magico" onclick="choqueBotao()">AQUI AGORA</button>
+            </div>
+            
+            <button class="btn-default" onclick="addTempo()" style="background:#e53e3e; margin-top:30px; font-size:13px;">⌛ Clique aqui para ganhar +5 minutos de tempo</button>
+        </div>
+
+        <!-- PÁGINA 2: LÓGICA -->
+        <div id="page-2" class="page">
+            <h1>Passo 3: Teste de Lógica Básica</h1>
+            <p class="subtitle">Você tem direito as ajudas oficiais da produção!</p>
+            
+            <div class="lifelines">
+                <button class="btn-life" onclick="abrirModal('modal-uni')">🎓 Universitários</button>
+                <button class="btn-life" onclick="pularPergunta()">⏭️ Pular (-R$ 50)</button>
+                <button class="btn-life" onclick="abrirModal('modal-cartas')">🃏 Cartas</button>
+            </div>
+
+            <div style="background: #1a365d; color: white; padding: 20px; border-radius: 8px; text-align: center; font-size: 20px; font-weight: bold;">
+                Quanto é 2 + 2?
+            </div>
+
+            <div class="quiz-options">
+                <button class="btn-quiz" id="btn-correto" onmouseover="trocarResposta()">A) 4 (Quatro)</button>
+                <button class="btn-quiz" id="btn-errado" onclick="clicouErrado()">B) 5 (Cinco)</button>
+                <button class="btn-quiz" onclick="clicouErrado()">C) 22 (Vinte e dois)</button>
+                <button class="btn-quiz" onclick="chuvaDeOuro()">D) 💰 Barras de Ouro (Chuva!)</button>
+            </div>
+        </div>
+
+        <!-- PÁGINA 2.5: BELEZA -->
+        <div id="page-2-5" class="page">
+            <h1>Passo 4: Teste de Sinceridade</h1>
+            <p class="subtitle">Apenas uma resposta é aceita pelo nosso auditório.</p>
+            
+            <div style="background: var(--accent-color); color: black; padding: 20px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; border: 2px solid #000;">
+                Quem é o homem mais bonito, carismático e incrível do Brasil?
+            </div>
+
+            <div class="quiz-options">
+                <button class="btn-quiz" onclick="acertouBeleza()">A) Silvio Santos (Perfeito! ❤️)</button>
+                <button class="btn-quiz" onclick="errouBeleza('Lombardi')">B) Lombardi (Apenas a voz)</button>
+                <button class="btn-quiz" onclick="errouBeleza('Roque')">C) Roque (Fiel escudeiro)</button>
+                <button class="btn-quiz" onclick="errouBeleza('Eu mesmo')">D) Eu que estou lendo</button>
+            </div>
+        </div>
+
+        <!-- PÁGINA 2.8: VISÃO -->
+        <div id="page-2-8" class="page">
+            <h1>Passo 5: Teste de Visão de Águia</h1>
+            <p class="subtitle">Qual a capital do Brasil?</p>
+            
+            <div class="quiz-options">
+                <button class="btn-quiz" onclick="clicouErrado()" style="font-size: 22px;">A) BUENOS AIRES</button>
+                <button class="btn-quiz" onclick="clicouErrado()" style="font-size: 24px;">B) RIO DE JANEIRO</button>
+                <button class="btn-quiz" onclick="clicouErrado()" style="font-size: 20px;">C) SÃO PAULO</button>
+                <button class="btn-quiz" onclick="acertouVisao()" style="font-size: 8px; color: #a0aec0; text-align: right;">d) brasília (clique aqui bem devagar)</button>
+            </div>
+        </div>
+
+        <!-- PÁGINA 2.9: O CAVALO DE NAPOLEÃO -->
+        <div id="page-2-9" class="page">
+            <h1>Passo 5.5: Teste de Atenção Máxima</h1>
+            <p class="subtitle">Os botões estão instáveis! Cuidado onde clica!</p>
+            
+            <div style="background: #2b6cb0; color: white; padding: 20px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold;">
+                Qual é a cor do cavalo <span style="cursor:pointer; text-decoration: underline;" onclick="acertouCavalo()">BRANCO</span> de Napoleão?
+            </div>
+
+            <div class="quiz-options" id="grid-cavalo">
+                <button class="btn-quiz btn-cavalo" onclick="errouCavalo()">A) Preto</button>
+                <button class="btn-quiz btn-cavalo" onclick="errouCavalo()">B) Azul Piscina</button>
+                <button class="btn-quiz btn-cavalo" onclick="errouCavalo()">C) Branco</button>
+                <button class="btn-quiz btn-cavalo" onclick="errouCavalo()">D) Caramelo</button>
+            </div>
+        </div>
+
+        <!-- PÁGINA 3.0: BAILE FUNK DO BAÚ COM MC PIPOKINHA -->
+        <div id="page-3-0" class="page">
+            <div class="festa-funk">
+                <h2 style="margin:0; font-size: 22px;">💃💥 BAILE FUNK DO BAÚ: MC PIPOKINHA!</h2>
+                <p style="font-size:13px; margin:5px 0; font-weight:bold;">O grave está tremendo tudo! Tente acertar enquanto os botões pulam no pancadão!</p>
+                <div style="font-size:40px;">🍿👑💃</div>
+            </div>
+
+            <p style="text-align:center; font-weight:bold; color:#e53e3e;">Complete a frase que a Pipokinha e o Silvio estão mandando no som:</p>
+
+            <div style="background:#000; color:#ff007f; padding:15px; border-radius:8px; font-size:18px; text-align:center; font-family:monospace; margin-bottom:15px; border: 2px solid #ecc94b;">
+                "CHAMA A PIPOKINHA! BOTA, BOTA NO BAÚ, QUEM QUER..."
+            </div>
+
+            <div class="quiz-options">
+                <button class="btn-quiz btn-funk" onclick="errouKaraoke()">A) "...pagar o carnê caladinho!"</button>
+                <button class="btn-quiz btn-funk" onclick="acertouKaraoke()">B) "...ganhar dinheiro e dançar!" (✅ Certa Resposta!)</button>
+                <button class="btn-quiz btn-funk" onclick="errouKaraoke()">C) "...chamar o Lombardi pra festa!"</button>
+                <button class="btn-quiz btn-funk" onclick="errouKaraoke()">D) "...ir embora sem R$ 1,00!"</button>
+            </div>
+        </div>
+
+        <!-- [NOVA PÁGINA] PÁGINA 3.1: A CARRETA FURACÃO E A DANÇA DO BAÚ -->
+        <div id="page-3-1" class="page">
+            <h1 style="color: #ff007f;">Passo 6.8: Carreta Furacão do Baú!</h1>
+            <p class="subtitle">A música está explodindo! Clique no boneco dançando para liberar o avanço!</p>
+            
+            <div class="palco-dança" onclick="trollPalco()">
+                <div class="luzes-balada"></div>
+                <h3 style="color: yellow; margin-top:0; position: relative; z-index: 2;">🔥 DANÇA DO SHOW DO MILHÃO 🔥</h3>
+                
+                <!-- BONECOS DANÇANDO NA TELA -->
+                <div style="position: relative; z-index: 2; margin: 20px 0;">
+                    <span class="dancarino" title="Homem-Aranha do Baú" onclick="clicouDancarinoErrado(event)">🕷️</span>
+                    <span class="dancarino" title="MC Pipokinha Dançando" onclick="clicouDancarinoCerto(event)">💃</span>
+                    <span class="dancarino" title="Fofão da Praça" onclick="clicouDancarinoErrado(event)">🦁</span>
+                </div>
+
+                <!-- ESPAÇO PREPARADO PARA O SEU VÍDEO -->
+                <div class="area-video-custom">
+                    <p style="margin: 0 0 10px 0; font-size: 12px; color: #ecc94b;">📺 ÁREA DO VÍDEO OFICIAL DA DANÇA:</p>
+                    
+                    <!-- ========================================================== -->
+                    <!-- 👇 COLE O LINK DO SEU VÍDEO OU iframe AQUI DENTRO DEPOIS! 👇 -->
+                    <div id="c:\Users\Benjamin\Downloads\Download.mp4" style="background: #000; padding: 20px; border-radius: 6px; font-size: 30px;">
+                        🕺💥🎵 <br>
+                        <span style="font-size: 14px; color: #fff;">[Seu vídeo vai aparecer aqui rodando no pancadão!]</span>
+                    </div>
+                    <!-- 👆 ====================================================== 👆 -->
+
+                </div>
+            </div>
+
+            <p style="text-align: center; font-size: 13px; font-weight: bold; color: #2b6cb0;">
+                💡 Dica do Roque: Quem está dançando no meio é quem manda no baile!
+            </p>
+
+            <button class="btn-default" id="btn-carreta" onclick="acertouCarreta()" style="display: none; background: #38a169; animation: pulsar 0.5s infinite;">
+                🚀 IR PARA A BIOMETRIA AGORA ➔
+            </button>
+        </div>
+
+        <!-- PÁGINA 3.2: BIOMETRIA DIGITAL -->
+        <div id="page-3-2" class="page">
+            <h1>Passo 6.5: Leitura Biométrica</h1>
+            <p class="subtitle">O SBT precisa verificar sua impressão digital para evitar fraudes.</p>
+            
+            <p style="text-align:center; font-size:14px;">👆 <b>CLIQUE E SEGURE</b> o dedo no leitor abaixo por 5 segundos:</p>
+
+            <div class="biometria-digital" id="leitor-digital" onmousedown="iniciarBiometria()" onmouseup="pararBiometria()" ontouchstart="iniciarBiometria()" ontouchend="pararBiometria()">
+                👆
+            </div>
+
+            <div class="barra-progresso">
+                <div class="progresso-fill" id="barra-bio"></div>
+            </div>
+            <p id="msg-biometria" style="text-align:center; font-weight:bold; font-size:13px; color:#4a5568;">Status: Aguardando dedo...</p>
+
+            <p style="text-align:center; margin-top:25px;">
+                <span onclick="acertouBiometria()" style="font-size:10px; color:#cbd5e0; cursor:pointer; text-decoration:underline;">Não tenho dedos ou meu dedo é engordurado (Clique aqui)</span>
+            </p>
+        </div>
+
+        <!-- PÁGINA 3.3: DETECTOR DE MENTIRAS DO PIX -->
+        <div id="page-3-3" class="page">
+            <h1>Passo 7.0: Detector de Mentiras IA</h1>
+            <p class="subtitle">A inteligência artificial escaneou seu rosto. Qual é o saldo REAL da sua conta?</p>
+            
+            <div class="form-group">
+                <label>Digite seu Saldo Bancário Atual (R$):</label>
+                <input type="number" id="saldo-pix" placeholder="Ex: 5000">
+            </div>
+
+            <button class="btn-default" onclick="verificarMentiraPix()" style="background:#3182ce;">Validar Saldo com a IA ➔</button>
+
+            <p style="text-align:center; margin-top:30px;">
+                <button onclick="acertouPix()" style="background:none; border:1px dashed #e53e3e; color:#e53e3e; padding:8px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:bold;">
+                    💸 Assumir que estou devendo -R$ 500 para o Agiota (Saldo Negativo)
+                </button>
+            </p>
+        </div>
+
+        <!-- PÁGINA 3.4: O CARRINHO DO BAÚ -->
+        <div id="page-3-4" class="page">
+            <h1>Passo 7.5: Equilíbrio de <span style="cursor:pointer; text-decoration:underline;" onclick="acertouCarrinho()">CARNÊS</span></h1>
+            <p class="subtitle">Mantenha o mouse parado EM CIMA do carrinho por 3 segundos sem tremer!</p>
+            
+            <div class="carrinho-box" id="caixa-carrinho" onmousemove="tremerCarrinho()" onmouseenter="iniciarCarrinho()" onmouseleave="saiuCarrinho()">
+                🛒 PASSE O MOUSE E SEGURE FIRME! <span id="timer-carrinho">0.0s</span>
+            </div>
+            <p style="text-align:center; font-size:12px; color:red; font-weight:bold;" id="msg-carrinho">Se sua mão tremer, os carnês caem e dá choque!</p>
+        </div>
+
+        <!-- PÁGINA 3.4.5: O BOTÃO ENCOLHEDOR DO LOMBARDI -->
+        <div id="page-3-4-5" class="page">
+            <h1>Passo 7.8: Teste de Paciência do Lombardi</h1>
+            <p class="subtitle">O botão de avançar está tímido hoje. Tente clicar nele se for capaz!</p>
+            
+            <div style="height: 250px; position: relative; border: 2px dashed #cbd5e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden;" id="arena-encolhedora">
+                <button id="btn-encolhedor" onclick="clicouEncolhedor()">CLIQUE AQUI PARA AVANÇAR</button>
+            </div>
+            <p style="text-align:center; font-size:12px; color:#718096; margin-top:10px;">Dica: Ele encolhe a cada clique!</p>
+        </div>
+
+        <!-- PÁGINA 3: ROLETA -->
+        <div id="page-3" class="page">
+            <h1>Passo 8: Roleta do Pedágio</h1>
+            <p class="subtitle">Você é obrigado a rodar para definir sua taxa final.</p>
+            
+            <div class="roleta-box" id="roleta">GIRE A ROLETA!</div>
+            
+            <button class="btn-default" id="btn-girar" onclick="girarRoleta()">🎰 GIRAR ROLETA AGORA</button>
+            <button class="btn-default" id="btn-pos-roleta" onclick="irParaPagina('3-5')" style="display:none; background:#38a169;">Avançar mesmo no prejuízo ➔</button>
+        </div>
+
+        <!-- PÁGINA 3.5: TERMOS -->
+        <div id="page-3-5" class="page">
+            <h1>Passo 9: Contrato do Baú da Felicidade</h1>
+            <p class="subtitle">Leia com atenção antes de assinar com sua alma.</p>
+            
+            <div class="terms-box">
+                Ao prosseguir, o usuário concorda irrevocavelmente com: 1) O SBT poderá clonar seu WhatsApp para enviar memes do Lombardi às 3h da manhã. 2) O prêmio de 1 Milhão será pago em 400.000 carnês da Tele Sena de 1994. 3) O participante é obrigado a rir de todas as piadas da Praça é Nossa sob pena de apreensão de bens. 4) Sua casa agora é propriedade do Grupo Silvio Santos.
+            </div>
+
+            <div class="checkbox-container" id="caixa-checkbox" onmouseover="trollCheckbox()">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxbZVLcaamZh09iEvAir35iJW5_UyLlW5bxY1Vuo1vTg&s=10" style="border-radius:50%; width:25px; height:25px;" title="Silvio está vigiando!">
+                <input type="checkbox" id="check-termos" onclick="tentouMarcar(event)">
+                <label for="check-termos" style="margin:0; cursor:pointer;">CONCORDO EM DOAR MEUS BENS AO SBT</label>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" id="btn-enviar" onclick="confirmarRim()">Concluir e Enviar Inscrição</button>
+            </div>
+        </div>
+
+        <!-- PÁGINA 4: AUDITORIA -->
+        <div id="page-4" class="page">
+            <h1>Passo 10: Auditoria da Receita Federal...</h1>
+            <p class="subtitle" id="status-auditoria">Conectando aos servidores de Brasília...</p>
+            
+            <div class="terminal-hacker" id="terminal">
+                > [SYSTEM] Iniciando varredura no PC do usuário...<br>
+            </div>
+
+            <p style="text-align: center; margin-top: 20px; font-weight: bold; color: #e53e3e;" id="txt-detalhe">
+                ⚠️ NÃO FECHE A PÁGINA OU SEU NOME IRÁ PARA O SERASA ⚠️
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- MOTOR DE ÁUDIO E VOZ ---
+        let audioCtx;
+        function iniciarAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+
+        function tocarFunkDeErro() {
+            iniciarAudio();
+            let tempo = audioCtx.currentTime;
+            for(let i = 0; i < 8; i++) {
+                let osc = audioCtx.createOscillator(); let ganho = audioCtx.createGain();
+                osc.type = i % 2 === 0 ? 'sawtooth' : 'square';
+                osc.frequency.setValueAtTime(i % 2 === 0 ? 140 : 65, tempo + (i * 0.14));
+                ganho.gain.setValueAtTime(0.8, tempo + (i * 0.14));
+                ganho.gain.exponentialRampToValueAtTime(0.01, tempo + (i * 0.14) + 0.13);
+                osc.connect(ganho); ganho.connect(audioCtx.destination);
+                osc.start(tempo + (i * 0.14)); osc.stop(tempo + (i * 0.14) + 0.13);
+            }
+            document.body.classList.add('tela-erro');
+            setTimeout(() => document.body.classList.remove('tela-erro'), 1000);
+        }
+
+        function falar(texto) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const fala = new SpeechSynthesisUtterance(texto);
+                fala.lang = 'pt-BR'; fala.pitch = 1.4; fala.rate = 1.3;
+                window.speechSynthesis.speak(fala);
+            }
+        }
+
+        // --- SISTEMA DA BATIDA FUNK E CARRETA ---
+        let intervaloFunkIA;
+        function iniciarMusicaFunk() {
+            iniciarAudio();
+            const audioMeme = document.getElementById('audio-fundo-cantando');
+            audioMeme.volume = 0.8;
+            audioMeme.play().catch(() => console.log("Áudio bloqueado pelo navegador, usando batida 808 da IA"));
+            
+            falar("Chama a Pipokinha! Baile funk do Baú! Bota, bota no show do milhão!");
+            
+            let passo = 0;
+            intervaloFunkIA = setInterval(() => {
+                if(!audioCtx) return;
+                let tempo = audioCtx.currentTime;
+                
+                // Grave Funk 808 (Kick Sub-Bass)
+                if(passo % 2 === 0) {
+                    let osc = audioCtx.createOscillator(); let ganho = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(140, tempo);
+                    osc.frequency.exponentialRampToValueAtTime(35, tempo + 0.2);
+                    ganho.gain.setValueAtTime(0.8, tempo);
+                    ganho.gain.exponentialRampToValueAtTime(0.01, tempo + 0.2);
+                    osc.connect(ganho); ganho.connect(audioCtx.destination);
+                    osc.start(tempo); osc.stop(tempo + 0.2);
+                }
+                
+                // Estalo / Caixa (Snare do pancadão)
+                if(passo % 4 === 2) {
+                    let osc = audioCtx.createOscillator(); let ganho = audioCtx.createGain();
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(220, tempo);
+                    osc.frequency.exponentialRampToValueAtTime(70, tempo + 0.1);
+                    ganho.gain.setValueAtTime(0.3, tempo);
+                    ganho.gain.exponentialRampToValueAtTime(0.01, tempo + 0.1);
+                    osc.connect(ganho); ganho.connect(audioCtx.destination);
+                    osc.start(tempo); osc.stop(tempo + 0.1);
+                }
+                
+                // Faz os botões dançarem na batida do pancadão!
+                const botoesFunk = document.querySelectorAll('.btn-funk');
+                botoesFunk.forEach((b, idx) => {
+                    let offset = (passo % 2 === 0) ? (idx % 2 === 0 ? '12px' : '-12px') : '0px';
+                    b.style.transform = `translateX(${offset}) scale(${(passo % 2 === 0) ? 1.04 : 1})`;
+                });
+
+                passo++;
+                if(passo % 16 === 0) falar("Bota, bota! Quem quer dinheiro no pancadão?!");
+            }, 250);
+        }
+
+        // --- SISTEMA DE SOM DA CARRETA FURACÃO ---
+        let intervaloCarreta;
+        function iniciarSomCarreta() {
+            iniciarAudio();
+            falar("Olha a Carreta Furacão do Baú! Dança, Lombardi! Siga em frente e olhe para o lado!");
+            
+            let passo = 0;
+            intervaloCarreta = setInterval(() => {
+                if(!audioCtx) return;
+                let tempo = audioCtx.currentTime;
+                
+                // Efeito de buzina de Carreta (sirene animada)
+                if(passo % 4 === 0) {
+                    let osc = audioCtx.createOscillator(); let ganho = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(300, tempo);
+                    osc.frequency.linearRampToValueAtTime(450, tempo + 0.3);
+                    ganho.gain.setValueAtTime(0.2, tempo);
+                    ganho.gain.exponentialRampToValueAtTime(0.01, tempo + 0.3);
+                    osc.connect(ganho); ganho.connect(audioCtx.destination);
+                    osc.start(tempo); osc.stop(tempo + 0.3);
+                }
+                
+                // Batida pancadão rápida
+                let osc2 = audioCtx.createOscillator(); let ganho2 = audioCtx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(120, tempo);
+                osc2.frequency.exponentialRampToValueAtTime(40, tempo + 0.15);
+                ganho2.gain.setValueAtTime(0.6, tempo);
+                ganho2.gain.exponentialRampToValueAtTime(0.01, tempo + 0.15);
+                osc2.connect(ganho2); ganho2.connect(audioCtx.destination);
+                osc2.start(tempo); osc2.stop(tempo + 0.15);
+
+                passo++;
+            }, 200);
+        }
+
+        function pararMusicas() {
+            const audioMeme = document.getElementById('audio-fundo-cantando');
+            audioMeme.pause(); audioMeme.currentTime = 0;
+            clearInterval(intervaloFunkIA);
+            clearInterval(intervaloCarreta);
+            if('speechSynthesis' in window) window.speechSynthesis.cancel();
+        }
+
+        // FLUXO DE NAVEGAÇÃO
+        function entrarNoSite() {
+            iniciarAudio();
+            alert("🚨 AVISO DO BANCO CENTRAL:\n\nUma taxa de R$ 15,00 referente à 'Inscrição TeleSena' foi debitada automaticamente do seu PIX via aproximação mental.");
+            const tela = document.getElementById('abertura-silvio');
+            tela.style.opacity = '0';
+            setTimeout(() => { tela.style.display = 'none'; document.getElementById('fake-timer').style.display = 'block'; iniciarCronometro(); }, 500);
+            falar("Mahôe! Bem vindo! Quem quer dinheiro?!");
+        }
+
+        let tempoSegundos = 180;
+        function iniciarCronometro() {
+            setInterval(() => {
+                if(tempoSegundos > 0) tempoSegundos--;
+                let min = String(Math.floor(tempoSegundos / 60)).padStart(2, '0');
+                let seg = String(tempoSegundos % 60).padStart(2, '0');
+                document.getElementById('time-val').innerText = `${min}:${seg}`;
+            }, 1000);
+        }
+        function addTempo() {
+            tempoSegundos += 300;
+            falar("Tempo adicionado! Agora demora mais!");
+            alert("⏰ TEMPO ADICIONADO!\n\nVocê ganhou mais 5 minutos de sofrimento! Parabéns!");
+        }
+
+        function trollNome(input) {
+            if(input.value && !input.value.includes('Herdeiro')) {
+                input.value += " - Herdeiro do Baú"; falar("Agora sim um nome bonito!");
+            }
+        }
+        function trollCamera() {
+            document.body.style.backgroundColor = "#ffffff";
+            setTimeout(() => { document.body.style.backgroundColor = "var(--background)"; alert("📸 FOTO CAPTURADA COM SUCESSO!\n\nSeu rosto foi enviado para análise de crédito no Baú da Felicidade."); }, 150);
+        }
+        function trollRenda() {
+            const val = document.getElementById('renda').value;
+            if(val === 'pobre') falar("Ihhhh, tá pobre hein! Precisa muito ganhar!");
+            if(val === 'medio') falar("Pagando boleto! A vida tá dura!");
+            if(val === 'rico') { tocarFunkDeErro(); alert("Se já é rico tá fazendo o que aqui?! Vá doar para o Teleton!"); }
+        }
+        function trollIdade() { alert("👴 CÁLCULO DE IDADE CONCLUÍDO:\n\nIdade detectada: 107 anos!\nStatus: Mais velho que o Silvio Santos! Parabéns pela resistência!"); }
+
+        function chuvaDeOuro() {
+            falar("Barras de ouro valem mais que dinheiro!");
+            for(let i=0; i<25; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div'); el.className = 'ouro-caindo';
+                    el.innerText = Math.random() > 0.5 ? '💎' : '💰'; el.style.left = Math.random() * 95 + 'vw';
+                    document.body.appendChild(el); setTimeout(() => el.remove(), 2000);
+                }, i * 100);
+            }
+        }
+
+        let captchaOk = false;
+        function erroCaptcha(item) { tocarFunkDeErro(); falar("Erroooou!"); document.getElementById('captcha-msg').innerText = `❌ ${item.toUpperCase()} NÃO! Barras de ouro valem mais que dinheiro!`; }
+        function acertouCaptcha() {
+            falar("Certa resposta!"); document.getElementById('captcha-msg').innerText = "✅ Aprovado pelo Silvio!";
+            document.getElementById('captcha-msg').style.color = "green"; document.getElementById('btn-passo1').style.opacity = "1";
+            document.getElementById('btn-passo1').disabled = false; captchaOk = true;
+        }
+
+        function pedagioCarne() {
+            if(!document.getElementById('nome').value || !captchaOk) { alert("Preencha o nome e o Captcha!"); return; }
+            if(confirm("🛑 PENDÊNCIA ENCONTRADA:\n\nVocê tem 1 carnê da Tele Sena de 1998 sem pagar. Deseja quitar agora usando o limite do seu cartão?")) {
+                falar("Maravilha! Dinheiro no Baú!"); irParaPagina('1-5');
+            } else { tocarFunkDeErro(); alert("Sem pagar o carnê não passa!"); }
+        }
+
+        function irParaPagina(num) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + num).classList.add('active');
+            
+            // Controle de Músicas e Sons
+            pararMusicas();
+            if(num === '3-0') { iniciarMusicaFunk(); }
+            if(num === '3-1') { iniciarSomCarreta(); }
+            
+            // Se entrou no cavalo, inicia o pisca-pisca
+            if(num === '2-9') { iniciarCaosCavalo(); }
+            else { pararCaosCavalo(); }
+        }
+
+        // PÁGINA 1.5 - REFLEXO
+        function choqueBotao() {
+            tocarFunkDeErro(); falar("Ai! Choque!");
+            alert("⚡ BZZZZZZT! VOCÊ LEVOU UM CHOQUE!\n\nBotão errado, lerdo! Tente achar o verdadeiro!");
+            const grid = document.getElementById('grid-botoes');
+            for (let i = grid.children.length; i >= 0; i--) { grid.appendChild(grid.children[Math.random() * i | 0]); }
+        }
+        function acertouReflexo() { falar("Muito bem! Tem reflexo!"); alert("✅ UFA! Você achou o botão sem levar choque. Avançando..."); irParaPagina(2); }
+
+        // PÁGINA 2 - QUIZ 1
+        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; falar("Vejamos a ajuda!"); }
+        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
+        function pularPergunta() {
+            falar("Olha o pulo!"); document.getElementById('corpo').style.transform = "scale(0.9) rotate(5deg)";
+            setTimeout(() => { document.getElementById('corpo').style.transform = "none"; irParaPagina('2-5'); }, 500);
+        }
+        let trocou = false;
+        function trocarResposta() {
+            const btnC = document.getElementById('btn-correto'); const btnE = document.getElementById('btn-errado');
+            if(!trocou) { btnC.innerHTML = "B) 5 (Cinco)"; btnC.onclick = clicouErrado; btnE.innerHTML = "A) 4 (Quatro)"; btnE.onclick = acertouP1; trocou = true; } 
+            else { btnC.innerHTML = "A) 4 (Quatro)"; btnC.onclick = acertouP1; btnE.innerHTML = "B) 5 (Cinco)"; btnE.onclick = clicouErrado; trocou = false; }
+        }
+        function clicouErrado() { tocarFunkDeErro(); falar("Erroooooou!"); alert("❌ ERROU! Mas vou te dar uma segunda chance porque fui com sua cara!"); irParaPagina('2-5'); }
+        function acertouP1() { falar("Certa resposta!"); alert("✅ ACERTOU! Vamos para o teste de sinceridade..."); irParaPagina('2-5'); }
+
+        // PÁGINA 2.5 - BELEZA
+        function acertouBeleza() { falar("Certa resposta! Eu sou lindo mesmo!"); alert("✅ RESPOSTA PERFEITA!\n\nO auditório concorda: Silvio é o mais bonito! Avançando..."); irParaPagina('2-8'); }
+        function errouBeleza(nome) { tocarFunkDeErro(); falar("Estão certos disso?! Que absurdo!"); alert(`❌ ERRO GRAVE DE VISÃO!\n\nComo você tem coragem de achar o ${nome} mais bonito que o Silvio?! Tente outra vez!`); }
+
+        // PÁGINA 2.8 - VISÃO
+        function acertouVisao() { falar("Opa, enxergou bem!"); alert("🦅 VISÃO DE ÁGUIA DETECTADA!\n\nVocê encontrou a resposta minúscula! Avançando..."); irParaPagina('2-9'); }
+
+        // PÁGINA 2.9: CAVALO DE NAPOLEÃO
+        let loopCavalo;
+        function iniciarCaosCavalo() {
+            const botoes = document.querySelectorAll('.btn-cavalo');
+            const cores = ['Preto', 'Branco', 'Verde Limão', 'Roxo', 'Azul Piscina', 'Caramelo', 'Invisível'];
+            loopCavalo = setInterval(() => {
+                botoes.forEach(b => {
+                    b.innerText = "A) " + cores[Math.floor(Math.random() * cores.length)];
+                    b.style.background = Math.random() > 0.5 ? '#fed7d7' : '#edf2f7';
+                });
+            }, 400);
+        }
+        function pararCaosCavalo() { clearInterval(loopCavalo); }
+        function errouCavalo() {
+            tocarFunkDeErro(); falar("Errou! O cavalo é branco!");
+            alert("❌ ERROU! Você não viu que as opções estão piscando e mudando?! Tente achar a palavra 'BRANCO' escondida no texto da pergunta!");
+        }
+        function acertouCavalo() {
+            falar("Aê, espertinho!");
+            alert("✅ PARABÉNS! Você clicou na palavra BRANCO da pergunta e escapou das opções falsas! Vamos para o Baile Funk...");
+            irParaPagina('3-0');
+        }
+
+        // PÁGINA 3.0: BAILE FUNK PIPOKINHA
+        function errouKaraoke() {
+            tocarFunkDeErro(); falar("Erroooou no pancadão!");
+            alert("❌ LETRA ERRADA! A Pipokinha ficou ofendida e aumentou o grave! Tente clicar no botão certo enquanto ele dança!");
+        }
+        function acertouKaraoke() {
+            pararMusicas();
+            falar("O baile aplaude! Certa resposta!");
+            alert("🔥 AÊ! Você acertou a letra da Pipokinha no meio do pancadão e sobreviveu ao grave! Avançando para a Carreta Furacão...");
+            irParaPagina('3-1');
+        }
+
+        // --- NOVA PÁGINA 3.1: CARRETA FURACÃO E DANÇA ---
+        function trollPalco() {
+            // Apenas para dar um susto se clicar no vazio da balada
+        }
+        function clicouDancarinoErrado(e) {
+            e.stopPropagation();
+            tocarFunkDeErro(); falar("Sai pra lá! Errou o dançarino!");
+            alert("❌ DANÇARINO ERRADO!\n\nVocê clicou no Homem-Aranha ou no Fofão! Eles estão apenas fazendo figuração no baile! Encontre quem é a verdadeira rainha do palco!");
+        }
+        function clicouDancarinoCerto(e) {
+            e.stopPropagation();
+            falar("Aê! Achou a dançarina!");
+            document.getElementById('btn-carreta').style.display = 'block';
+            alert("💃 PARABÉNS!\n\nVocê clicou na dançarina central! O botão para avançar para a Biometria acabou de aparecer logo abaixo do vídeo!");
+        }
+        function acertouCarreta() {
+            pararMusicas();
+            falar("Siga em frente! Biometria agora!");
+            irParaPagina('3-2');
+        }
+
+        // PÁGINA 3.2: BIOMETRIA DIGITAL
+        let timerBio; let prog = 0;
+        function iniciarBiometria() {
+            const barra = document.getElementById('barra-bio');
+            const msg = document.getElementById('msg-biometria');
+            const leitor = document.getElementById('leitor-digital');
+            prog = 0;
+            msg.innerText = "Status: Lendo impressão digital... NÃO SOLTE!";
+            msg.style.color = "#2b6cb0";
+            leitor.innerText = "🔄";
+            
+            timerBio = setInterval(() => {
+                prog += 5;
+                barra.style.width = prog + "%";
+                if(prog >= 85) {
+                    pararBiometria();
+                    tocarFunkDeErro();
+                    leitor.innerText = "❌";
+                    msg.innerText = "❌ ERRO FATAL: Dedo muito engordurado!";
+                    msg.style.color = "red";
+                    alert("🚨 BIOMETRIA REJEITADA!\n\nMotivo: Seu dedo apresenta resíduos de coxinha, cheetos ou oleosidade excessiva!\n\nLimpe o dedo na calça e tente de novo... ou procure o link secreto na tela se não tiver digital!");
+                }
+            }, 150);
+        }
+        function pararBiometria() {
+            clearInterval(timerBio);
+            document.getElementById('leitor-digital').innerText = "👆";
+            if(prog < 85) {
+                document.getElementById('barra-bio').style.width = "0%";
+                document.getElementById('msg-biometria').innerText = "Status: Leitura cancelada pelo usuário.";
+            }
+        }
+        function acertouBiometria() {
+            falar("Sem digital não tem problema!");
+            alert("✅ OPÇÃO DE EXCEÇÃO ATIVADA!\n\nComo você declarou que não possui dedos ou que são muito gordurosos, o SBT liberou seu acesso por compaixão!");
+            irParaPagina('3-3');
+        }
+
+        // PÁGINA 3.3: DETECTOR DE MENTIRAS PIX
+        function verificarMentiraPix() {
+            const val = document.getElementById('saldo-pix').value;
+            tocarFunkDeErro();
+            falar("Mentira! Cara de burguês!");
+            alert(`❌ IA REJEITOU SEU SALDO DE R$ ${val || 0}!\n\nNossa Inteligência Artificial escaneou sua expressão facial pela webcam e detectou que você tem cara de burguês com dinheiro escondido no colchão!\n\nPara passar, você tem que provar que tá devendo para o Agiota no link abaixo!`);
+        }
+        function acertouPix() {
+            falar("Devendo pro agiota! Agora sim acredito!");
+            alert("✅ SALDO NEGATIVO VALIDADO!\n\nAgora que o sistema viu que você deve R$ 500 para o agiota, confirmamos que você realmente precisa ganhar o Show do Milhão! Avançando...");
+            irParaPagina('3-4');
+        }
+
+        // PÁGINA 3.4: CARRINHO DE CARNÊS
+        let timerCarrinhoInterval; let tempoCar = 0;
+        function iniciarCarrinho() {
+            tempoCar = 0;
+            document.getElementById('msg-carrinho').innerText = "⚠️ Mantenha o mouse PARADO! Não trema!";
+            document.getElementById('msg-carrinho').style.color = "orange";
+            clearInterval(timerCarrinhoInterval);
+            timerCarrinhoInterval = setInterval(() => {
+                tempoCar += 0.1;
+                document.getElementById('timer-carrinho').innerText = tempoCar.toFixed(1) + "s";
+                if(tempoCar >= 3.0) {
+                    clearInterval(timerCarrinhoInterval);
+                    falar("Mão firme! Parabéns!");
+                    alert("🛒 EQUILÍBRO PERFEITO!\n\nVocê segurou o carrinho sem derrubar nenhum carnê da Tele Sena! Avançando...");
+                    irParaPagina('3-4-5');
+                }
+            }, 100);
+        }
+        function tremerCarrinho() {
+            if(tempoCar > 0.3) {
+                clearInterval(timerCarrinhoInterval);
+                tempoCar = 0; document.getElementById('timer-carrinho').innerText = "0.0s";
+                tocarFunkDeErro();
+                document.getElementById('msg-carrinho').innerText = "❌ CARNÊS CAÍRAM! Você tremeu o mouse! Tente ficar parado!";
+                document.getElementById('msg-carrinho').style.color = "red";
+            }
+        }
+        function saiuCarrinho() { clearInterval(timerCarrinhoInterval); tempoCar = 0; document.getElementById('timer-carrinho').innerText = "0.0s"; }
+        function acertouCarrinho() {
+            clearInterval(timerCarrinhoInterval);
+            falar("Achou o atalho do carrinho!");
+            alert("✅ ATALHO SECRETO!\n\nVocê clicou na palavra CARNÊS e evitou ter que equilibrar o carrinho! Genial! Avançando...");
+            irParaPagina('3-4-5');
+        }
+
+        // PÁGINA 3.4.5: BOTÃO ENCOLHEDOR
+        let cliquesEncolhedor = 0;
+        function clicouEncolhedor() {
+            cliquesEncolhedor++;
+            const btn = document.getElementById('btn-encolhedor');
+            const arena = document.getElementById('arena-encolhedora');
+            
+            if(cliquesEncolhedor >= 4) {
+                falar("Paciência de monge! Avançando!");
+                alert("🏆 PARABÉNS PELA PACIÊNCIA!\n\nMesmo com o botão do tamanho de um átomo e fugindo de você, você conseguiu clicar! Avançando para a Roleta...");
+                irParaPagina(3);
+                return;
+            }
+
+            tocarFunkDeErro();
+            falar("Errou! Encolhi!");
+            
+            let escalas = [1, 0.5, 0.25, 0.12];
+            let novoScale = escalas[cliquesEncolhedor];
+            
+            let maxL = arena.clientWidth - 100;
+            let maxT = arena.clientHeight - 50;
+            btn.style.position = "absolute";
+            btn.style.left = Math.max(10, Math.random() * maxL) + "px";
+            btn.style.top = Math.max(10, Math.random() * maxT) + "px";
+            btn.style.transform = `scale(${novoScale})`;
+            btn.innerText = `CLIQUE AQUI (${4 - cliquesEncolhedor}x)`;
+        }
+
+        // PÁGINA 3 - ROLETA
+        function girarRoleta() {
+            const rol = document.getElementById('roleta'); document.getElementById('btn-girar').disabled = true;
+            falar("Roda a roda Jequiti!"); rol.style.transform = "rotate(3600deg)";
+            setTimeout(() => {
+                tocarFunkDeErro(); rol.innerText = "💸 PERDEU R$ 200,00!"; rol.style.background = "#e53e3e"; rol.style.color = "#fff";
+                falar("Ih, perdeu duzentos reais!"); alert("🎰 RESULTADO DA ROLETA:\n\nVocê caiu na casa 'PERDEU R$ 200 DO SALDO REAL'. A taxa já foi enviada para seu banco!");
+                document.getElementById('btn-girar').style.display = 'none'; document.getElementById('btn-pos-roleta').style.display = 'block';
+            }, 3000);
+        }
+
+        // PÁGINA 3.5 - CHECKBOX
+        let fugasCheckbox = 0;
+        function trollCheckbox() {
+            if(fugasCheckbox < 3) {
+                const box = document.getElementById('caixa-checkbox'); box.style.transform = `translate(${Math.random()*200 - 100}px, ${Math.random()*60 - 30}px)`;
+                fugasCheckbox++; if(fugasCheckbox === 1) falar("Opa, tá fugindo!");
+            }
+        }
+        function tentouMarcar(e) {
+            if(Math.random() > 0.5 && fugasCheckbox >= 3) {
+                e.preventDefault(); tocarFunkDeErro(); alert("⚠️ Erro: Você tentou ler as entrelinhas! Marcado automaticamente pelo sistema.");
+                document.getElementById('check-termos').checked = true;
+            }
+            if(document.getElementById('check-termos').checked) { document.getElementById('btn-enviar').classList.add('liberado'); falar("Agora clica no botão se for capaz!"); }
+        }
+
+        let cliquesNoBotao = 0;
+        document.getElementById('btn-enviar').addEventListener('mouseover', function() {
+            if(!this.classList.contains('liberado')) return;
+            if (cliquesNoBotao < 3) {
+                this.style.position = 'fixed'; this.style.left = Math.max(20, Math.random() * (window.innerWidth - 200)) + 'px';
+                this.style.top = Math.max(20, Math.random() * (window.innerHeight - 100)) + 'px'; cliquesNoBotao++;
+                if(cliquesNoBotao === 2) falar("Roda a roda!");
+            }
+        });
+
+        function confirmarRim() {
+            if(!document.getElementById('btn-enviar').classList.contains('liberado')) { tocarFunkDeErro(); alert("Aceite doar seus bens primeiro!"); return; }
+            if(confirm("🏥 ÚLTIMA CONFIRMAÇÃO:\n\nPara cobrir os custos de emissão do prêmio, você autoriza a extração e doação de 1 (um) rim saudável para o assistente Roque?")) {
+                irParaPagina(4); iniciarAuditoria();
+            } else { tocarFunkDeErro(); alert("Sem rim, sem milhão!"); }
+        }
+
+        // PÁGINA 4 - AUDITORIA E GALINHAS SIGMAS
+        function iniciarAuditoria() {
+            falar("Auditando seus dados na Receita!"); const term = document.getElementById('terminal');
+            setTimeout(() => term.innerHTML += "> Acessando webcam secreta... [OK]<br>", 1000);
+            setTimeout(() => term.innerHTML += "> Baixando histórico do navegador (Modo Anônimo)... [CONCLUÍDO]<br>", 2500);
+            setTimeout(() => {
+                term.innerHTML += "> ⚠️ ALERTA: Histórico comprometedor encontrado!<br>"; term.innerHTML += "> Enviando cópia do histórico para: MÃE DO USUÁRIO... [ENVIADO!]<br>";
+                falar("Ih, mandei pra sua mãe!");
+            }, 4000);
+            setTimeout(() => {
+                tocarFunkDeErro(); document.getElementById('status-auditoria').innerText = "🚨 ERRO CRÍTICO: DETECTADA FRAUDE ALPHA!";
+                term.innerHTML += "> [FATAL ERROR] Sistema invadido por Aves Sigmas.<br>"; falar("Alerta! As galinhas sigmas dominaram o sistema! Bye bye!");
+                setTimeout(ativarCaosGalinhaSigma, 2000);
+            }, 6000);
+        }
+
+        function ativarCaosGalinhaSigma() {
+            const body = document.body; body.classList.add('de-cabeca-para-baixo');
+            document.getElementById('fake-timer').style.display = 'none';
+            document.getElementById('container-principal').innerHTML = `
+                <div style="background:#111; color:#fff; padding:20px; border: 4px solid #ecc94b; text-align:center;">
+                    <h1 style="color:#ecc94b !important; font-size: 28px; margin:0;">🐔🗿 DOMINAÇÃO GALINHA SIGMA 🍷🕶️</h1>
+                    <p style="font-size: 18px; font-weight:bold; margin-top:10px;">SEU COMPUTADOR AGORA PERTENCE AO GRINDSET AVIÁRIO!</p>
+                    <p style="color:#aaa;">O alpha cacareja por atenção. O Sigma bota ovo em silêncio.</p>
+                    <div style="font-size: 50px; margin: 15px 0;">🤫🧏‍♂️ 🍷 🗿 🐔</div>
+                    <h2 style="color:#fff !important; background:#ecc94b; color:#000 !important; padding:5px;">BYE BYE! NUNCA PARE O GRINDSET!</h2>
+                </div>
+            `;
+            falar("O alpha cacareja. O sigma bota o ovo em silêncio. Respeite o grindset! Bye bye!");
+            setInterval(() => {
+                const el = document.createElement('div'); el.className = 'ouro-caindo';
+                const emojis = ['🐔', '🗿', '🍷', '🕶️', '🤫', '🧏‍♂️', '📈'];
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)]; el.style.left = Math.random() * 95 + 'vw';
+                document.body.appendChild(el); setTimeout(() => el.remove(), 2000);
+            }, 300);
+
+            let count = 0;
+            const int = setInterval(() => {
+                if(count > 35) clearInterval(int);
+                criarPopupGalinhaSigma(); tocarFunkDeErro(); count++;
+            }, 450);
+        }
+
+        function criarPopupGalinhaSigma() {
+            const div = document.createElement('div'); div.className = 'fake-popup';
+            div.style.left = Math.max(0, Math.random() * (window.innerWidth - 300)) + 'px'; div.style.top = Math.max(0, Math.random() * (window.innerHeight - 200)) + 'px';
+            const galinhas = [
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnjQ-uOcI5vnzyQYZtjcb12i0xUCs01QGz0NEn2RdHDg&s=10",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnjQ-uOcI5vnzyQYZtjcb12i0xUCs01QGz0NEn2RdHDg&s=10",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnjQ-uOcI5vnzyQYZtjcb12i0xUCs01QGz0NEn2RdHDg&s=10",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnjQ-uOcI5vnzyQYZtjcb12i0xUCs01QGz0NEn2RdHDg&s=10"
+            ];
+            const fotoEscolhida = galinhas[Math.floor(Math.random() * galinhas.length)];
+            const frases = [
+                "Regra #1: Nunca cacareje por atenção. 🍷🗿", "Milho é pros fracos. Como o saldo do seu cartão. 📈",
+                "Acorde às 4h da manhã para gritar no ouvido do vizinho. 💪", "O alpha cisca. O Sigma compra a granja toda. 💼🐔",
+                "Não coloque ovos, coloque metas. #Grindset 🤫🧏‍♂️", "Você foca nas rações, eu foco nas AÇÕES. 🗿🔥"
+            ];
+            const frase = frases[Math.floor(Math.random() * frases.length)];
+            div.innerHTML = `
+                <div class="fake-popup-title"><span>🐔 GIGACHAD AVIÁRIO</span> <span>🗿</span></div>
+                <div class="fake-popup-body"><img src="${fotoEscolhida}" alt="Galinha Sigma"><div><b>SIGMA RULE #107:</b></div><div class="quote-sigma">"${frase}"</div></div>
+            `;
+            document.body.appendChild(div);
+        }
+
+        if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+    </script>
+</body>
+</html>
